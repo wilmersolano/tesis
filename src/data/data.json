@@ -1,0 +1,159 @@
+{
+  "Header": {
+    "title": "Visualizacion de datos espacio-temporales",
+    "paragraph": "¿De qué trata Trackview? ... Trackview es una aplicación web que se encarga de cargar y presentar datos espacio-temporales en 2D y 3D, tiene la capacidad de cargar datos de diferente ambiente siempre y cuando se siga el formato establecido."
+  },
+  "About": {
+    "paragraph": "En el caso que desee visualizar datos espacio-temporales que contengan una sola trayectoria ",
+    "Why": [
+      "Lorem ipsum dolor",
+      "Tempor incididunt",
+      "Lorem ipsum dolor",
+      "Incididunt ut labore"
+    ],
+    "Why2": [
+      "Aliquip ex ea commodo",
+      "Lorem ipsum dolor",
+      "Exercitation ullamco",
+      "Lorem ipsum dolor"
+    ]
+  },
+  "Gallery": [
+    {
+      "title": "Ocultar lineas",
+      "largeImage": "img/portfolio/oculL-large.png",
+      "smallImage": "img/portfolio/oculL-small.png"
+    },
+    {
+      "title": "Ocultar puntos",
+      "largeImage": "img/portfolio/oculP-large.png",
+      "smallImage": "img/portfolio/oculP-small.png"
+    },
+    {
+      "title": "Perspectiva 2D",
+      "largeImage": "img/portfolio/2d-large.png",
+      "smallImage": "img/portfolio/2d-small.png"
+    },
+    {
+      "title": "Perspectiva 3D",
+      "largeImage": "img/portfolio/3d-large.png",
+      "smallImage": "img/portfolio/3d-small.png"
+    },
+    {
+      "title": "Filtrar los datos",
+      "largeImage": "img/portfolio/filtrado-large.png",
+      "smallImage": "img/portfolio/filtrado-small.png"
+    },
+    {
+      "title": "Más de una trayectoria",
+      "largeImage": "img/portfolio/masD-large.png",
+      "smallImage": "img/portfolio/masD-small.png"
+    }
+  ],
+  "Services": [
+    {
+      "icon": "fa fa-bars",
+      "name": "Ir a Gráfica",
+      "text": "En el menú superior dar clic en la opción de Gráfica para dirigirse a la página para visualizar los datos."
+    },
+    {
+      "icon": "fa fa-caret-down",
+      "name": "Abrir el menú",
+      "text": "Ya en la página de Gráfica, en la parte izquierda abrir el menu para observar las opciónes."
+    },
+    {
+      "icon": "fa fa-cloud-download",
+      "name": "Cargar datos",
+      "text": "En la opción de Cargar Información subir el archivo JSON con el formato anteriormente mencionado"
+    },
+    {
+      "icon": "fa fa-pencil",
+      "name": "Personalización",
+      "text": "Para mostrar/ocultar los puntos y las lineas, o ver los datos en perspectiva 2d elegir la opción de Visualizaciones"
+    },
+    {
+      "icon": "fa fa-compress",
+      "name": "Zoom",
+      "text": "En la opción de Zoom se aumente o disminuye la visualización de los datos, tambien incluye ver en pantalla completa el escenario."
+    },
+    {
+      "icon": "fa fa-filter",
+      "name": "Filtro",
+      "text": "Elija la hora de inicio y la hora final que desea ver los datos."
+    }
+  ],
+  "Testimonials": [
+    {
+      "img": "img/testimonials/01.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "John Doe"
+    },
+    {
+      "img": "img/testimonials/02.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "Johnathan Doe"
+    },
+    {
+      "img": "img/testimonials/03.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "John Doe"
+    },
+    {
+      "img": "img/testimonials/04.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "Johnathan Doe"
+    },
+    {
+      "img": "img/testimonials/05.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "John Doe"
+    },
+    {
+      "img": "img/testimonials/06.jpg",
+      "text": "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit. Duis sed dapibus leo nec ornare diam sedasd commodo nibh ante facilisis bibendum dolor feugiat at.\"",
+      "name": "Johnathan Doe"
+    }
+  ],
+  "Team": [
+    {
+      "img": "img/team/hector.jpg",
+      "name": "Hector Cedeño",
+      "job": "Desarrollador BackEnd"
+    },
+    {
+      "img": "img/team/will.jpg",
+      "name": "Wilmer Solano",
+      "job": "Desarrollador FrontEnd"
+    }
+  ],
+  "Contact": {
+    "address": "4321 California St, San Francisco, CA 12345 ",
+    "phone": "+1 123 456 1234",
+    "email": "info@company.com",
+    "facebook": "fb.com",
+    "twitter": "twitter.com",
+    "youtube": "youtube.com"
+  },
+  "Features": [
+    {
+      "icon": "fa fa-file",
+      "title": "Formato sencillo",
+      "text": "Se trabaja con formato JSON, el cual contiene una estructura sencilla y facil de adaptar a los datos"
+    },
+    {
+      "icon": "fa fa-desktop",
+      "title": "Visualización 2D y 3D",
+      "text": "Contiene opciónes para observar los datos desde las perspectivas 2D y 3D, mejorando el análisi de los datos. "
+    },
+    {
+      "icon": "fa fa-download",
+      "title": "Descarga de visualización",
+      "text": "Se genera un reporte con la visualización de los datos en tiempo real."
+    },
+    {
+      "icon": "fa fa-cube",
+      "title": "Personlización",
+      "text": "Incluye la personalización a gusto del usuario al momento de visualizar los datos."
+    }
+  ]
+}
