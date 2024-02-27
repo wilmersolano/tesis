@@ -385,7 +385,7 @@ const Cubo = () => {
             scene.current.add(cube.current);
             // Agregar AxesHelper al cubo
             const axesHelper = new AxesHelper(30);
-            axesHelper.material.linewidth = 200; // Ajusta el grosor
+            axesHelper.material.linewidth = 3; // Ajusta el grosor
             axesHelper.position.set(-15, -15, 0);
             cube.current.add(axesHelper);
             // Agregar flechas al final de los ejes
