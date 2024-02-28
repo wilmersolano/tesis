@@ -523,7 +523,7 @@ const Cubo = () => {
                         }
                     });
 
-                    if (curvePoints.length >= 3 && allPointsInsidePath) {
+                    if (curvePoints.length >= 2 && allPointsInsidePath) {
                         const curve = new THREE.CatmullRomCurve3(curvePoints);
                         const points = curve.getPoints(180);
                         const positions = points.flatMap(v => [v.x, v.y, v.z]);
@@ -590,7 +590,7 @@ const Cubo = () => {
         textureLoader.load(url, (texture) => {
             const material = new THREE.MeshBasicMaterial({
                 map: texture,
-                transparent: true,
+                transparent: false,
                 opacity: 1,
             }); // Establecer la opacidad a 1 (sin opacidad)
             cube.current.children[0].material = material; // Actualizar el material del plane1

@@ -47,7 +47,7 @@ export const Services = (props) => {
             />
             <div className="service-desc">
               <h3>3. Cargar datos</h3>
-              <p>En la opción de Cargar Información subir el archivo JSON con el formato anteriormente mencionado</p>
+              <p>En la opción de Cargar Información subir el archivo JSON con el formato anteriormente mencionado, de igual manera se puede descargar los datos que se visualizan.</p>
             </div>
           </div>
 
