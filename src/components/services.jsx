@@ -7,7 +7,7 @@ export const Services = (props) => {
         <div className="section-title">
           <h2>¿Cómo usar la aplicación web?</h2>
           <p>
-            A continuación se presenta el paso a paso para visualizar los datos espacio-temporales.
+            A continuación, se presenta el paso a paso para visualizar los datos espacio-temporales.
           </p>
         </div>
         <div className="row">
@@ -34,7 +34,7 @@ export const Services = (props) => {
             />
             <div className="service-desc">
               <h3>2. Abrir el menú</h3>
-              <p>Ya en la página de Gráfica, en la parte izquierda abrir el menu para observar las opciónes.</p>
+              <p>Ya en la página de Gráfica, en la parte izquierda abrir el menú para observar las opciones.</p>
             </div>
           </div>
 
@@ -60,7 +60,7 @@ export const Services = (props) => {
             />
             <div className="service-desc">
               <h3>4. Personalización</h3>
-              <p>Para mostrar/ocultar los puntos y las lineas, o ver los datos en perspectiva 2d elegir la opción de Visualizaciones</p>
+              <p>Para mostrar/ocultar los puntos y las líneas, o ver los datos en perspectiva 2d elegir la opción de Visualizaciones</p>
             </div>
           </div>
 
@@ -73,10 +73,9 @@ export const Services = (props) => {
             />
             <div className="service-desc">
               <h3>5. Zoom</h3>
-              <p>En la opción de Zoom se aumente o disminuye la visualización de los datos, tambien incluye ver en pantalla completa el escenario.</p>
+              <p>En la opción de Zoom se aumente o disminuye la visualización de los datos, también incluye ver en pantalla completa el escenario.</p>
             </div>
           </div>
-
 
           <div className="col-md-4">
             {" "}
@@ -95,3 +94,5 @@ export const Services = (props) => {
     </div>
   );
 };
+
+

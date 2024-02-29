@@ -1,6 +1,6 @@
 {
   "Header": {
-    "title": "Visualizacion de datos espacio-temporales",
+    "title": "Visualización de datos",
     "paragraph": "¿De qué trata Trackview? ... Trackview es una aplicación web que se encarga de cargar y presentar datos espacio-temporales en 2D y 3D, tiene la capacidad de cargar datos de diferente ambiente siempre y cuando se siga el formato establecido."
   },
   "About": {
@@ -20,7 +20,7 @@
   },
   "Gallery": [
     {
-      "title": "Ocultar lineas",
+      "title": "Ocultar líneas",
       "largeImage": "img/portfolio/oculL-large.png",
       "smallImage": "img/portfolio/oculL-small.png"
     },
@@ -59,7 +59,7 @@
     {
       "icon": "fa fa-caret-down",
       "name": "Abrir el menú",
-      "text": "Ya en la página de Gráfica, en la parte izquierda abrir el menu para observar las opciónes."
+      "text": "Ya en la página de Gráfica, en la parte izquierda abrir el menú para observar las opciones."
     },
     {
       "icon": "fa fa-cloud-download",
@@ -69,12 +69,12 @@
     {
       "icon": "fa fa-pencil",
       "name": "Personalización",
-      "text": "Para mostrar/ocultar los puntos y las lineas, o ver los datos en perspectiva 2d elegir la opción de Visualizaciones"
+      "text": "Para mostrar/ocultar los puntos y las líneas, o ver los datos en perspectiva 2d elegir la opción de Visualizaciones"
     },
     {
       "icon": "fa fa-compress",
       "name": "Zoom",
-      "text": "En la opción de Zoom se aumente o disminuye la visualización de los datos, tambien incluye ver en pantalla completa el escenario."
+      "text": "En la opción de Zoom se aumente o disminuye la visualización de los datos, también incluye ver en pantalla completa el escenario."
     },
     {
       "icon": "fa fa-filter",
@@ -118,12 +118,16 @@
     {
       "img": "img/team/hector.jpg",
       "name": "Hector Cedeño",
-      "job": "Desarrollador BackEnd"
+      "job": "Desarrollador",
+      "git": "https://github.com/Hector858",
+      "face": "https://www.facebook.com/profile.php?id=100005242786423&sk=about_overview"
     },
     {
       "img": "img/team/will.jpg",
       "name": "Wilmer Solano",
-      "job": "Desarrollador FrontEnd"
+      "job": "wjsolano@espe.edu.ec",
+      "git": "https://github.com/wjsolano",
+      "face": "https://www.facebook.com/Wilmer.S.716/"
     }
   ],
   "Contact": {
@@ -138,12 +142,12 @@
     {
       "icon": "fa fa-file",
       "title": "Formato sencillo",
-      "text": "Se trabaja con formato JSON, el cual contiene una estructura sencilla y facil de adaptar a los datos"
+      "text": "Se trabaja con formato JSON, el cual contiene una estructura sencilla y fácil de adaptar a los datos"
     },
     {
       "icon": "fa fa-desktop",
       "title": "Visualización 2D y 3D",
-      "text": "Contiene opciónes para observar los datos desde las perspectivas 2D y 3D, mejorando el análisi de los datos. "
+      "text": "Contiene opciones para observar los datos desde las perspectivas 2D y 3D, mejorando el análisis de los datos. "
     },
     {
       "icon": "fa fa-download",
@@ -152,7 +156,7 @@
     },
     {
       "icon": "fa fa-cube",
-      "title": "Personlización",
+      "title": "Personalización",
       "text": "Incluye la personalización a gusto del usuario al momento de visualizar los datos."
     }
   ]

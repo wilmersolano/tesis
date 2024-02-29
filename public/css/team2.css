@@ -1,0 +1,307 @@
+.ody {
+    font-family: 'Roboto Slab', serif;
+    font-size: 14px;
+    line-height: 1.67;
+    color: #444;
+    padding: 60px 0;
+}
+
+a {
+    color: #e45245;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+.team-members {
+    transform: rotate(-45deg);
+}
+
+.team-members li>div {
+    float: left;
+    width: 20%;
+}
+
+.team-members li:nth-child(2)>div:first-child {
+    margin-left: 20%;
+}
+
+.team-members li:last-child>div:first-child {
+    margin-left: 40%;
+}
+
+.member-details>div {
+    background-color: #ddd;
+    margin: 5px;
+}
+
+.member-details img {
+    transform: rotate(45deg) translate(0, 15px) scale(1.2);
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+
+.member-details>div {
+    position: relative;
+    overflow: hidden;
+}
+
+.member-info {
+    position: absolute;
+    top: 50%;
+    transform: rotate(45deg) translate(-12px, 15px);
+    left: 0;
+    right: 0;
+    z-index: 2;
+    text-align: center;
+}
+
+.member-info h3,
+.member-info p {
+    margin: 0;
+    color: #fff;
+    position: relative;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.member-info h3 {
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 400;
+    top: -100px;
+}
+
+.member-info p {
+    font-weight: 300;
+    font-size: 12px;
+    bottom: -150px;
+}
+
+.member-details>div:after {
+    content: '';
+    background-image: linear-gradient(45deg, rgba(228, 82, 69, .8) 50%, transparent 50%);
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.member-details *,
+.member-details>div:after {
+    cursor: pointer;
+    transition: all .4s ease;
+}
+
+.member-details:hover *,
+.member-details:hover>div:after {
+    opacity: 1;
+    visibility: visible;
+}
+
+.member-details:hover .member-info h3 {
+    top: 0;
+}
+
+.member-details:hover .member-info p {
+    bottom: 0;
+}
+
+.team-overview {
+    padding-right: 15px;
+}
+
+.team-overview h2 {
+    text-transform: uppercase;
+    font-size: 22px;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.team-overview>a {
+    margin-bottom: 30px;
+    display: block;
+}
+
+.team-overview>a:before {
+    content: '';
+    width: 10px;
+    height: 2px;
+    position: relative;
+    top: -3px;
+    margin-right: 5px;
+    background-color: #ccc;
+    display: inline-block;
+}
+
+.flex-center {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+}
+
+.flex-center>div:first-child {
+    order: 2;
+}
+
+@media only screen and (max-width : 992px) {
+    .sm-no-flex {
+        display: block;
+    }
+
+    .sm-no-float {
+        float: none !important;
+    }
+
+    .sm-text-center {
+        text-align: center;
+    }
+}
+
+@media only screen and (max-width : 550px) {
+    .team-members li {
+        text-align: center;
+    }
+
+    .team-members li>div {
+        float: none;
+        display: inline-block;
+        width: 30%;
+        margin: 0 !important;
+    }
+
+    .team-members {
+        transform: rotate(0);
+    }
+
+    .member-details img {
+        transform: rotate(0) translate(0, 0);
+    }
+
+    .team-overview {
+        padding: 15px;
+    }
+}
+
+@media only screen and (max-width : 399px) {
+    .team-members li>div {
+        width: 48%;
+    }
+}
+
+/* extra */
+.copyright {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 1.6rem;
+    background-color: #ededed;
+}
+
+.copyright a {
+    display: inline-block;
+    padding: 15px 2px;
+}
+
+.copyright a:not(:last-child):after {
+    content: "/";
+    margin-left: 10px;
+}
+
+.toptal {
+    color: #204ecf;
+}
+
+.upstack {
+    color: #008bf7;
+}
+
+.upwork {
+    color: #37a000;
+}
+
+.fiverr {
+    color: #1dbf73;
+}
+
+.jobs {
+    color: magenta;
+    text-decoration: underline;
+    margin-top: -15px;
+}
+
+#ti {
+    font-weight: 700;
+    margin-bottom: 5px;
+    font-size: 20px;
+    color: #37517e;
+}
+
+.mdi--github {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33c.85 0 1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2'/%3E%3C/svg%3E");
+    background-color: currentColor;
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+.ic--baseline-facebook {
+    display: inline-block;
+    width: 1em;
+    height: 1em;
+    --svg: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath fill='%23000' d='M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95'/%3E%3C/svg%3E");
+    background-color: currentColor;
+    -webkit-mask-image: var(--svg);
+    mask-image: var(--svg);
+    -webkit-mask-repeat: no-repeat;
+    mask-repeat: no-repeat;
+    -webkit-mask-size: 100% 100%;
+    mask-size: 100% 100%;
+}
+
+#soci {
+    margin-top: 12px;
+    display: flex;
+    align-content: center;
+}
+
+#soci a {
+    transition: ease-in-out 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50px;
+    width: 32px;
+    height: 32px;
+    background: #eff2f8;
+}
+
+#soci a i {
+    color: #37517e;
+    font-size: 16px;
+    margin: 0 2px;
+}
+
+#soci a:hover {
+    background: #47b2e4;
+}
+
+#soci a:hover i {
+    color: #fff;
+}
+
+#soci a+a {
+    margin-left: 8px;
+}

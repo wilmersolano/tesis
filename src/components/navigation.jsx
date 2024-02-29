@@ -36,17 +36,19 @@ export const Navigation = (props) => {
             <span className="icon-bar"></span>{" "}
             <span className="icon-bar"></span>{" "}
           </button>
-          <Link to="/" className="navbar-brand page-scroll" href="#page-top">
-            <div style={{ display: "flex", alignItems: "center" }}>
-              <img
-                src="https://i.postimg.cc/NMSPtQWt/TRACKVIEW.png"
-                alt="Logo"
-                style={{ height: "50px", marginRight: "3px" }}
-              />
-              <span style={{ lineHeight: "50px" }}>Trackview</span>
-            </div>
+
+          <Link to="/" className="navbar-brand page-scroll">
+
+
+            <img
+              src="https://i.postimg.cc/WbpMzhB8/largo4.png"
+              alt="Logo"
+              style={{ height: "50px", marginBottom: "3px" }}
+            />
+
           </Link>
         </div>
+
 
         <div
           className="collapse navbar-collapse"
@@ -60,12 +62,12 @@ export const Navigation = (props) => {
             </li>
             <li>
               <Link to="/" className="page-scroll" onClick={(e) => handleClick(e, "#about")}>
-                Formatos
+                Formato
               </Link>
             </li>
             <li>
               <Link to="/" className="page-scroll" onClick={(e) => handleClick(e, "#services")}>
-                Guía
+                Uso
               </Link>
             </li>
             <li>
@@ -89,7 +91,7 @@ export const Navigation = (props) => {
               </Link>
             </li> */}
             <li>
-              <Link to="/grafica">Grafica</Link> {/* Nueva opción de navegación */}
+              <Link to="/grafica">Gráfica</Link> {/* Nueva opción de navegación */}
             </li>
           </ul>
         </div>
