@@ -648,7 +648,11 @@ const Cubo = () => {
                     } catch (error) {
                         console.error("Error parsing JSON file:", error);
                         // Muestra una notificación en el navegador
-                        alert("Error al parsear el archivo JSON. Asegúrate de que el formato sea correcto.");
+                        swal({
+                            title: "¡Error!",
+                            text: "Revisa el formato e intentalo de nuevo",
+                            icon: "error",
+                        });
                     }
                 };
                 reader.readAsText(file);
@@ -750,7 +754,7 @@ const Cubo = () => {
         } else {
             swal({
                 title: "¡Error!",
-                text: "Error al parsear el archivo JSON. Asegúrate de que el formato sea correcto.",
+                text: "Asegúrate de que el formato sea correcto.",
                 icon: "error",
             });
         }
