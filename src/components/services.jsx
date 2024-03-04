@@ -60,7 +60,7 @@ export const Services = (props) => {
             />
             <div className="service-desc">
               <h3>4. Personalización</h3>
-              <p>Para mostrar/ocultar los puntos y las líneas, o ver los datos en perspectiva 2d elegir la opción de Visualizaciones</p>
+              <p>Para mostrar/ocultar los puntos y las líneas, o ver los datos en perspectiva 2d elegir la opción de Visualizaciones <br></br></p>
             </div>
           </div>
 
@@ -73,7 +73,7 @@ export const Services = (props) => {
             />
             <div className="service-desc">
               <h3>5. Zoom</h3>
-              <p>En la opción de Zoom se aumente o disminuye la visualización de los datos, también incluye ver en pantalla completa el escenario.</p>
+              <p>Se aumenta o disminuye la vista del escenario, y Fullscreen para pantalla completa</p>
             </div>
           </div>
 
@@ -89,6 +89,24 @@ export const Services = (props) => {
               <p>Elija la hora de inicio y la hora final que desea ver los datos.</p>
             </div>
           </div>
+          <br></br>
+          <div className="text-center">
+            <div className="col-md-4">
+              {" "}
+              <img
+                src="https://i.postimg.cc/zDscvTCP/flechas.png"
+                alt="Logo"
+                style={{ height: "150px", marginRight: "3px", width: "175px" }}
+              />
+              <div className="service-desc">
+                <h3>6. Movimiento</h3>
+                <p>Para mover la escena es posible por medio del mouse y las flechas del teclaod.</p>
+              </div>
+            </div>
+          </div>
+
+
+
         </div>
       </div>
     </div>
