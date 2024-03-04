@@ -410,7 +410,7 @@ const Cubo = () => {
             cube.current.add(arrowX);
             cube.current.add(arrowY);
             cube.current.add(arrowZ);
-            // Agregar textos en los extremos de AxesHelper
+            // Agregar textos en los extremos de AxesHelp2
             const loader = new FontLoader();
             loader.load("https://threejs.org/examples/fonts/helvetiker_regular.typeface.json", function (font) {
                 agregarTexto("X", font, 15, -15, 0, 'color1', 0);
