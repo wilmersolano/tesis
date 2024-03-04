@@ -61,14 +61,6 @@ const Cubo = () => {
             point.visible = pointTime >= startHour && pointTime <= endHour;
         };
 
-        /*
-        método de 2 o más caminos camino pero el con el formato:
-        {
-            "paths":[{
-                "points":[{x: numero}, {y:numero}, {z: "00:00:00"}]
-            }]
-        }
-        */
         let minZ = Infinity;
         let maxZ = -Infinity;
 
@@ -421,9 +413,13 @@ const Cubo = () => {
             // Agregar textos en los extremos de AxesHelper
             const loader = new FontLoader();
             loader.load("https://threejs.org/examples/fonts/helvetiker_regular.typeface.json", function (font) {
-                agregarTexto("X", font, 15, -15, 0, 'color1');
-                agregarTexto("Y", font, -15, 15, 0, 'color2');
-                agregarTexto("T", font, -15, -15, 30, 'color3');
+                agregarTexto("X", font, 15, -15, 0, 'color1', 0);
+                agregarTexto("Y", font, -15, 15, 0, 'color2', 0);
+                agregarTexto("T", font, -15, -15, 30, 'color3', 0);
+
+                agregarTexto("X", font, 15, -15, 0, 'color1', Math.PI / 2);
+                agregarTexto("Y", font, -15, 15, 0, 'color2', Math.PI / 2);
+                agregarTexto("T", font, -15, -15, 30, 'color3', Math.PI / 2);
             });
         } else {
             // Limpiar todos los elementos del cubo existente, excepto el AxesHelper
@@ -462,7 +458,7 @@ const Cubo = () => {
         scene.current.add(cube.current);
     };
 
-    const agregarTexto = (text, font, x, y, z, olor) => {
+    const agregarTexto = (text, font, x, y, z, olor, rotationY) => {
         // Crear geometría de texto
         const geometry = new TextGeometry(text, {
             font: font,
@@ -491,7 +487,7 @@ const Cubo = () => {
         // Crear malla de texto con el material
         const textMesh = new Mesh(geometry, material);
         textMesh.position.set(x, y, z);
-
+        textMesh.rotation.set(rotationY, 0, 0);
         // Agregar la malla de texto al objeto cube
         cube.current.add(textMesh);
     };
@@ -612,14 +608,52 @@ const Cubo = () => {
     const cargarImagenDesdeURL = (url) => {
         const textureLoader = new THREE.TextureLoader();
         textureLoader.load(url, (texture) => {
-            const material = new THREE.MeshBasicMaterial({
+            // Material para el plano 1
+            const material1 = new THREE.MeshBasicMaterial({
                 map: texture,
                 transparent: true,
                 opacity: 1,
-            }); // Establecer la opacidad a 1 (sin opacidad)
-            cube.current.children[0].material = material; // Actualizar el material del plane1
+            });
+
+            // Material para el plano 2 (tipo espejo)
+            const material2 = new THREE.MeshBasicMaterial({
+                map: texture, // Usa la textura como mapa de entorno para el efecto de reflejo
+                transparent: true,
+                opacity: 1,
+                side: THREE.BackSide, // Muestra la parte posterior del material para el efecto de espejo
+            });
+
+            // Actualizar el material de ambos planos (plane1 y plane2)
+            cube.current.children.forEach((child) => {
+                if (child instanceof THREE.Mesh && child.isPlane) {
+                    if (child === cube.current.children[0]) {
+                        child.material = material1;
+                    } else {
+                        child.material = material2;
+                    }
+                }
+            });
         });
     };
+
+    const eliminarImagen = () => {
+        cube.current.children.forEach((child) => {
+            if (child instanceof THREE.Mesh && child.isPlane) {
+                // Eliminar textura del plano (tanto plano 1 como plano 2)
+                if (child.material.map) {
+                    child.material.map.dispose();
+                }
+                // Dispose de otros recursos asociados al material del plano
+                child.material.dispose();
+                // Configurar un nuevo material con opacidad 0
+                child.material = new THREE.MeshBasicMaterial({
+                    transparent: true,
+                    opacity: 0,
+                });
+            }
+        });
+    };
+
     //función para cargar json
     const loadPointsFromJSON = () => {
         const input = document.createElement("input");
@@ -640,19 +674,12 @@ const Cubo = () => {
                                 cube.current.remove(child);
                             }
                         });
-                        if ("imageURL" in data) {
-                            cargarImagenDesdeURL(data.imageURL);
-                        }
                         addPointsFromJSON(data);
                         agregarLineas(data);
                     } catch (error) {
                         console.error("Error parsing JSON file:", error);
                         // Muestra una notificación en el navegador
-                        swal({
-                            title: "¡Error!",
-                            text: "Revisa el formato e intentalo de nuevo",
-                            icon: "error",
-                        });
+                        alert("Error al parsear el archivo JSON. Asegúrate de que el formato sea correcto.");
                     }
                 };
                 reader.readAsText(file);
@@ -683,6 +710,7 @@ const Cubo = () => {
                                 icon: "error",
                             });
                             allPathsInsideCube = false;
+                            eliminarImagen();
                             console.log(`El formato de hora en al menos uno de los puntos no es válido: ${point.z}`);
                         }
                     } else {
@@ -692,6 +720,7 @@ const Cubo = () => {
                             icon: "error",
                         });
                         allPathsInsideCube = false;
+                        eliminarImagen();
                         console.log(`Coordenadas con puntos inválidos: x=${point.x}, y=${point.y}, z=${point.z}`);
                     }
                 });
@@ -727,6 +756,7 @@ const Cubo = () => {
                                     icon: "error",
                                 });
                                 allPointsInsidePath = false;
+                                eliminarImagen();
                                 console.log(`Coordenadas con puntos inválidos: x=${point.x}, y=${point.y}, z=${point.z}`);
                             }
                         }
@@ -741,12 +771,16 @@ const Cubo = () => {
 
                 if (allPathsInsideCube) {
                     cube.current.add(pathsGroup);
+                    if ("imageURL" in data) {
+                        cargarImagenDesdeURL(data.imageURL);
+                    }
                 } else {
                     swal({
                         title: "¡Error!",
                         text: "Al menos una de las trayectorias contiene coordenadas fuera del cubo.",
                         icon: "error",
                     });
+                    eliminarImagen();
                 }
             } else {
                 console.log("¡Advertencia! Al menos uno de los caminos contiene información incorrecta.");
@@ -754,9 +788,10 @@ const Cubo = () => {
         } else {
             swal({
                 title: "¡Error!",
-                text: "Asegúrate de que el formato sea correcto.",
+                text: "Error al parsear el archivo JSON. Asegúrate de que el formato sea correcto.",
                 icon: "error",
             });
+            eliminarImagen();
         }
     };
 
