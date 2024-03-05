@@ -613,14 +613,7 @@ const Cubo = () => {
                 map: texture,
                 transparent: true,
                 opacity: 1,
-            });
-
-            // Material para el plano 2 (tipo espejo)
-            const material2 = new THREE.MeshBasicMaterial({
-                map: texture, // Usa la textura como mapa de entorno para el efecto de reflejo
-                transparent: true,
-                opacity: 1,
-                side: THREE.BackSide, // Muestra la parte posterior del material para el efecto de espejo
+                side: THREE.DoubleSide,
             });
 
             // Actualizar el material de ambos planos (plane1 y plane2)
@@ -628,8 +621,6 @@ const Cubo = () => {
                 if (child instanceof THREE.Mesh && child.isPlane) {
                     if (child === cube.current.children[0]) {
                         child.material = material1;
-                    } else {
-                        child.material = material2;
                     }
                 }
             });
