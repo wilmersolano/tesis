@@ -670,7 +670,11 @@ const Cubo = () => {
                     } catch (error) {
                         console.error("Error parsing JSON file:", error);
                         // Muestra una notificación en el navegador
-                        alert("Error al parsear el archivo JSON. Asegúrate de que el formato sea correcto.");
+                        swal({
+                            title: "¡Error!",
+                            text: "Revisa el archivo y asegurate de que el formato sea el correcto",
+                            icon: "error",
+                        });
                     }
                 };
                 reader.readAsText(file);
@@ -779,7 +783,7 @@ const Cubo = () => {
         } else {
             swal({
                 title: "¡Error!",
-                text: "Error al parsear el archivo JSON. Asegúrate de que el formato sea correcto.",
+                text: "Asegúrate de que el formato sea correcto.",
                 icon: "error",
             });
             eliminarImagen();
@@ -876,7 +880,7 @@ const Cubo = () => {
 
     return (
 
-        <div style={{ display: 'flex' }} ref={mainContainer}>
+        <div style={{ display: 'flex' }} ref={mainContainer} id="cubo">
             <Sidebar collapsed={!showSidebar} style={{ height: "100vh", position: 'absolute' }} backgroundColor="rgba(7,21,56,255)" ref={menuContainer}>
 
                 <Menu iconShape="square">
