@@ -60,7 +60,7 @@ export const Services = (props) => {
             />
             <div className="service-desc">
               <h3>4. Personalización</h3>
-              <p>Para mostrar/ocultar los puntos y las líneas, o ver los datos en perspectiva 2d elegir la opción de Visualizaciones <br></br></p>
+              <p>Para mostrar/ocultar los puntos, líneas,y los datos en perspectiva 2d elegir la opción Visualizaciones <br></br></p>
             </div>
           </div>
 
@@ -91,20 +91,34 @@ export const Services = (props) => {
           </div>
           <br></br>
           <div className="text-center">
+
+            <div className="col-md-4">
+              {" "}
+              <img
+                src="https://i.postimg.cc/wBmfYPxk/trayectorias-Fil2.png"
+                alt="Logo"
+                style={{ height: "300px", marginRight: "3px", width: "350px" }}
+              />
+              <div className="service-desc">
+                <h3>6. Filtro de Trayectorias</h3>
+                <p>Marcar la casilla de la trayectoria que quiera ocultar</p>
+              </div>
+            </div>
+
             <div className="col-md-4">
               {" "}
               <img
                 src="https://i.postimg.cc/zDscvTCP/flechas.png"
                 alt="Logo"
-                style={{ height: "150px", marginRight: "3px", width: "175px" }}
+                style={{ height: "150px", marginRight: "3px", width: "175px", marginBottom: "140px" }}
               />
+              <br></br>
               <div className="service-desc">
                 <h3>6. Movimiento</h3>
-                <p>Para mover la escena es posible por medio del mouse y las flechas del teclaod.</p>
+                <p>Para mover la escena es posible por medio del mouse y las flechas del teclado.</p>
               </div>
             </div>
           </div>
-
 
 
         </div>

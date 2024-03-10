@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState, useMemo } from "react";
 import * as THREE from "three";
 import { OrbitControls } from "three/examples/jsm/controls/OrbitControls";
 import { Line2 } from 'three/addons/lines/Line2.js';
@@ -19,6 +19,7 @@ import html2canvas from 'html2canvas';
 import { useNavigate } from 'react-router-dom';
 import { CgArrowLeftO } from "react-icons/cg";
 import swal from 'sweetalert';
+import { PiLineSegments } from "react-icons/pi";
 
 const Cubo = () => {
     const scene = useRef(null);
@@ -39,6 +40,125 @@ const Cubo = () => {
     const [startTime, setStartTime] = useState("");
     const [endTime, setEndTime] = useState("");
     const navigate = useNavigate();
+    //const [selectedPaths, setSelectedPaths] = useState([]);
+    const [jsonData, setJsonData] = useState(null);
+    const [pathVisibility, setPathVisibility] = useState({});
+
+    const options = useMemo(() => {
+        if (jsonData && 'paths' in jsonData) {
+            return jsonData.paths.map((path, index) => ({
+                label: `Trayectoria ${index + 1}`,
+                value: index,
+                selected: pathVisibility[index] !== false,
+            }));
+        }
+        return [];
+    }, [jsonData, pathVisibility]);
+
+    // Esta función actualiza la escena excluyendo la trayectoria seleccionada
+    const updateScene = (visibility) => {
+        // Almacena los valores originales de minZ y maxZ antes de realizar modificaciones
+        const originalZValues = jsonData.paths.reduce((acc, path) => {
+            const pathZValues = path.points.map((point) => {
+                const time = new Date(`1970-01-01T${point.z}`);
+                return time.getTime();
+            });
+            return [...acc, ...pathZValues];
+        }, []);
+
+        const originalMinZ = Math.min(...originalZValues);
+        const originalMaxZ = Math.max(...originalZValues);
+
+        // Elimina todos los elementos de puntos y líneas
+        cube.current.children.slice().forEach((child) => {
+            if (child instanceof THREE.Group) {
+                cube.current.remove(child);
+            } else if (child instanceof Line2) {
+                cube.current.remove(child);
+            }
+        });
+
+        // Vuelve a agregar los puntos y líneas excluyendo la trayectoria seleccionada
+        const pathsGroup = new THREE.Group();
+        jsonData.paths.forEach((path, i) => {
+            if (visibility[i]) {
+                // Agrega los puntos de la trayectoria
+                // ...
+                const pointsData = path.points;
+                const spheres = new THREE.Group();
+                const zRange = originalMaxZ - originalMinZ;
+                const curvePoints = pointsData.flatMap((point) => {
+                    if (typeof point.x === 'number' && typeof point.y === 'number' && typeof point.z === 'string') {
+                        const time = new Date(`1970-01-01T${point.z}`);
+                        const normalizedZ = (time.getTime() - originalMinZ) / zRange;
+                        const scaledZ = normalizedZ * 30; // Assuming the height of the cube is 10 units
+
+                        if (point.x <= 15 && point.y <= 15 && point.x >= -15 && point.y >= -15) {
+                            const sphereGeometry = new THREE.SphereGeometry(0.35, 16, 16);
+                            const sphereMaterial = new THREE.MeshBasicMaterial({ color: 0x800080 });
+                            const sphere = new THREE.Mesh(sphereGeometry, sphereMaterial);
+                            // Almacenar los valores originales en userData
+                            sphere.userData.originalValues = { x: point.x, y: point.y, z: point.z };
+                            sphere.position.set(point.x, point.y, scaledZ);
+                            sphere.userData.isPoint = true;
+                            spheres.add(sphere);
+                            pathsGroup.add(spheres);
+                            return new THREE.Vector3(point.x, point.y, scaledZ);
+                        } else {
+                            return [];
+                        }
+                    } else {
+                        return [];
+                    }
+                });
+
+                if (curvePoints.length >= 2) {
+                    const curve = new THREE.CatmullRomCurve3(curvePoints);
+                    const points = curve.getPoints(180);
+                    const positions = points.flatMap(v => [v.x, v.y, v.z]);
+
+                    const colors = [];
+                    const divisions = Math.round(100 * curvePoints.length);
+
+                    const lineColor = generateRandomColor();
+                    for (let i = 0, l = divisions; i < l; i++) {
+                        colors.push(lineColor.r, lineColor.g, lineColor.b);
+                    }
+
+                    const geometry = new LineGeometry().setPositions(positions);
+                    geometry.setColors(colors);
+
+                    const material = new LineMaterial({
+                        linewidth: 5,
+                        resolution: new THREE.Vector2(window.innerWidth, window.innerHeight),
+                        dashed: false,
+                        transparent: true,
+                        vertexColors: true,
+                    });
+
+                    const thickLine = new Line2(geometry, material);
+                    thickLine.computeLineDistances();
+
+                    cube.current.add(thickLine);
+                    cube.current.add(pathsGroup);
+                }
+            }
+        });
+    };
+
+    const handleCheckboxChange = (index) => {
+        setPathVisibility((prevVisibility) => {
+            const updatedVisibility = { ...prevVisibility };
+            updatedVisibility[index] = !updatedVisibility[index];
+
+            // Llama a la función para actualizar la escena al cambiar la visibilidad
+            updateScene(updatedVisibility);
+
+            return updatedVisibility;
+        });
+    };
+
+
 
     const handleNavigateHome = () => {
         navigate('/');
@@ -63,33 +183,22 @@ const Cubo = () => {
 
         let minZ = Infinity;
         let maxZ = -Infinity;
-
-        cube.current.children.forEach((child) => {
-            if (child instanceof THREE.Group && child.children.length > 0) {
-                child.children.forEach((path) => {
-                    if (path.userData.isPoint && path.parent instanceof THREE.Group) {
-                        const pointTime = new Date(`1970-01-01T${path.userData.originalValues.z}`).getTime();
+        // Asegúrate de que jsonData sea válido antes de acceder a sus propiedades
+        if (jsonData && jsonData.paths) {
+            // Itera sobre las trayectorias del JSON
+            jsonData.paths.forEach((path) => {
+                if (path.points) {
+                    path.points.forEach((point) => {
+                        const pointTime = new Date(`1970-01-01T${point.z}`).getTime();
                         minZ = Math.min(minZ, pointTime);
                         maxZ = Math.max(maxZ, pointTime);
-                    } else if (path instanceof THREE.Group && path.children.length > 0) {
-                        path.children.forEach((point) => {
-                            if (point.userData.isPoint && point.parent instanceof THREE.Group) {
-                                const pointTime = new Date(`1970-01-01T${point.userData.originalValues.z}`).getTime();
-                                minZ = Math.min(minZ, pointTime);
-                                maxZ = Math.max(maxZ, pointTime);
-                            }
-                        });
-                    }
-                });
-            } else if (child instanceof Line2 && !esLineaBorde(child)) {
-                const pointsArray = child.geometry.attributes.position.array;
-                for (let i = 2; i < pointsArray.length; i += 3) {
-                    const pointTime = new Date(`1970-01-01T${pointsArray[i]}:00`).getTime();
-                    minZ = Math.min(minZ, pointTime);
-                    maxZ = Math.max(maxZ, pointTime);
+                    });
                 }
-            }
-        });
+            });
+        } else {
+            console.error("jsonData o jsonData.paths es nulo o indefinido");
+        }
+
         const addLinesForVisiblePaths = (pathsData) => {
             // Obtener el mínimo y máximo global antes de recorrer los caminos
             pathsData.forEach((path) => {
@@ -410,16 +519,12 @@ const Cubo = () => {
             cube.current.add(arrowX);
             cube.current.add(arrowY);
             cube.current.add(arrowZ);
-            // Agregar textos en los extremos de AxesHelp2
+            // Agregar textos en los extremos de AxesHelper
             const loader = new FontLoader();
             loader.load("https://threejs.org/examples/fonts/helvetiker_regular.typeface.json", function (font) {
-                agregarTexto("X", font, 15, -15, 0, 'color1', 0);
-                agregarTexto("Y", font, -15, 15, 0, 'color2', 0);
-                agregarTexto("T", font, -15, -15, 30, 'color3', 0);
-
-                agregarTexto("X", font, 15, -15, 0, 'color1', Math.PI / 2);
-                agregarTexto("Y", font, -15, 15, 0, 'color2', Math.PI / 2);
-                agregarTexto("T", font, -15, -15, 30, 'color3', Math.PI / 2);
+                agregarTexto("X", font, 15, -15, 0, 'color1');
+                agregarTexto("Y", font, -15, 15, 0, 'color2');
+                agregarTexto("T", font, -15, -15, 30, 'color3');
             });
         } else {
             // Limpiar todos los elementos del cubo existente, excepto el AxesHelper
@@ -458,7 +563,7 @@ const Cubo = () => {
         scene.current.add(cube.current);
     };
 
-    const agregarTexto = (text, font, x, y, z, olor, rotationY) => {
+    const agregarTexto = (text, font, x, y, z, olor) => {
         // Crear geometría de texto
         const geometry = new TextGeometry(text, {
             font: font,
@@ -487,7 +592,7 @@ const Cubo = () => {
         // Crear malla de texto con el material
         const textMesh = new Mesh(geometry, material);
         textMesh.position.set(x, y, z);
-        textMesh.rotation.set(rotationY, 0, 0);
+
         // Agregar la malla de texto al objeto cube
         cube.current.add(textMesh);
     };
@@ -665,8 +770,14 @@ const Cubo = () => {
                                 cube.current.remove(child);
                             }
                         });
+                        setJsonData(data);
                         addPointsFromJSON(data);
                         agregarLineas(data);
+                        // Limpiar la selección de checkboxes antes de abrir el diálogo de carga de archivos
+                        const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+                        checkboxes.forEach((checkbox) => {
+                            checkbox.checked = false;
+                        });
                     } catch (error) {
                         console.error("Error parsing JSON file:", error);
                         // Muestra una notificación en el navegador
@@ -783,7 +894,7 @@ const Cubo = () => {
         } else {
             swal({
                 title: "¡Error!",
-                text: "Asegúrate de que el formato sea correcto.",
+                text: "Revisa el archivo JSON. Asegúrate de que el formato sea correcto.",
                 icon: "error",
             });
             eliminarImagen();
@@ -878,9 +989,21 @@ const Cubo = () => {
         actualizarFiltroHora(startTime, endTime);
     }, [startTime, endTime]);
 
+    useEffect(() => {
+        // Inicializar pathVisibility con todas las trayectorias visibles
+        if (jsonData && 'paths' in jsonData) {
+            const initialVisibility = jsonData.paths.reduce((acc, _, index) => {
+                acc[index] = true;
+                return acc;
+            }, {});
+            setPathVisibility(initialVisibility);
+        }
+    }, [jsonData]);
+
+
     return (
 
-        <div style={{ display: 'flex' }} ref={mainContainer} id="cubo">
+        <div style={{ display: 'flex' }} ref={mainContainer}>
             <Sidebar collapsed={!showSidebar} style={{ height: "100vh", position: 'absolute' }} backgroundColor="rgba(7,21,56,255)" ref={menuContainer}>
 
                 <Menu iconShape="square">
@@ -931,7 +1054,7 @@ const Cubo = () => {
                         </MenuItem>
                     </SubMenu>
 
-                    <SubMenu label="Filtro" icon={<BiSolidTimeFive style={{ fontSize: '32px', color: hoveredItem === 13 ? 'rgba(7,21,56,255)' : 'white' }} />} style={{ color: hoveredItem === 13 ? 'rgba(7,21,56,255)' : 'white' }} onMouseEnter={() => setHoveredItem(13)} onMouseLeave={() => setHoveredItem(null)}>
+                    <SubMenu label="Filtro de horas" icon={<BiSolidTimeFive style={{ fontSize: '32px', color: hoveredItem === 13 ? 'rgba(7,21,56,255)' : 'white' }} />} style={{ color: hoveredItem === 13 ? 'rgba(7,21,56,255)' : 'white' }} onMouseEnter={() => setHoveredItem(13)} onMouseLeave={() => setHoveredItem(null)}>
 
                         <MenuItem style={{ background: hoveredItem === 9 ? 'white' : 'rgba(7,21,56,255)', color: hoveredItem === 9 ? 'rgba(7,21,56,255)' : 'white' }} icon={<WiTime1 style={{ fontSize: '32px', color: hoveredItem === 9 ? 'rgba(7,21,56,255)' : 'white' }} />} onMouseEnter={() => setHoveredItem(9)} onMouseLeave={() => setHoveredItem(null)}>
                             <select value={startTime} onChange={handleStartTimeChange} style={{ color: 'black' }} >
@@ -949,6 +1072,24 @@ const Cubo = () => {
                             <b> Fin</b>
                         </MenuItem>
                     </SubMenu>
+
+                    <Menu title="Options" style={{ background: hoveredItem === 25 ? 'white' : 'rgba(7,21,56,255)', color: hoveredItem === 25 ? 'rgba(7,21,56,255)' : 'white' }} icon={<PiLineSegments style={{ fontSize: '32px', color: hoveredItem === 25 ? 'rgba(7,21,56,255)' : 'white' }} />} onMouseEnter={() => setHoveredItem(25)} onMouseLeave={() => setHoveredItem(null)}>
+                        <SubMenu label="Filtrado Trayectorias" icon={<PiLineSegments style={{ fontSize: '32px', color: hoveredItem === 25 ? 'rgba(7,21,56,255)' : 'white' }} />} >
+                            {options.map((option) => (
+                                <MenuItem key={option.value} title="Options" style={{ background: hoveredItem === 17 ? 'white' : 'rgba(7,21,56,255)', color: hoveredItem === 17 ? 'rgba(7,21,56,255)' : 'white' }} >
+                                    <input
+                                        type="checkbox"
+                                        checked={option.isChecked}
+                                        onChange={() => handleCheckboxChange(option.value)}
+                                    />
+                                    <label>{option.label}</label>
+                                </MenuItem>
+                            ))}
+
+                        </SubMenu>
+
+                    </Menu>
+
                     <MenuItem
                         icon={<CgArrowLeftO style={{ fontSize: '32px' }} />}
                         onClick={handleNavigateHome}
