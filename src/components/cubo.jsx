@@ -49,7 +49,7 @@ const Cubo = () => {
             return jsonData.paths.map((path, index) => ({
                 label: `Trayectoria ${index + 1}`,
                 value: index,
-                selected: pathVisibility[index] !== false,
+                selected: pathVisibility[index] !== true,
             }));
         }
         return [];
@@ -776,7 +776,7 @@ const Cubo = () => {
                         // Limpiar la selección de checkboxes antes de abrir el diálogo de carga de archivos
                         const checkboxes = document.querySelectorAll('input[type="checkbox"]');
                         checkboxes.forEach((checkbox) => {
-                            checkbox.checked = false;
+                            checkbox.checked = true;
                         });
                     } catch (error) {
                         console.error("Error parsing JSON file:", error);

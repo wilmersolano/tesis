@@ -101,7 +101,7 @@ export const Services = (props) => {
               />
               <div className="service-desc">
                 <h3>6. Filtro de Trayectorias</h3>
-                <p>Marcar la casilla de la trayectoria que quiera ocultar</p>
+                <p>Desmarcar la casilla de la trayectoria que quiera ocultar</p>
               </div>
             </div>
 
