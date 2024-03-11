@@ -153,6 +153,8 @@ const Cubo = () => {
 
             // Llama a la función para actualizar la escena al cambiar la visibilidad
             updateScene(updatedVisibility);
+            setStartTime("");
+            setEndTime("");
 
             return updatedVisibility;
         });
@@ -778,6 +780,8 @@ const Cubo = () => {
                         checkboxes.forEach((checkbox) => {
                             checkbox.checked = true;
                         });
+                        setStartTime("");
+                        setEndTime("");
                     } catch (error) {
                         console.error("Error parsing JSON file:", error);
                         // Muestra una notificación en el navegador
